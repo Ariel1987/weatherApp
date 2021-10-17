@@ -1,27 +1,33 @@
-import { useEffect, useState } from "react"
-
-const now = new Date()
-let seconds = now.getSeconds()
-let minutes = now.getMinutes()
-let hour = now.getHours()
-
-if (seconds < 10) {
-    seconds = "0" + seconds
-}
-if (minutes < 10) {
-    minutes = "0" + minutes
-}
-const time = hour + ":" + minutes + ":" + seconds
+import { useEffect, useRef, useState } from 'react'
+import formatTime from '../utils/formatTime'
 
 const CurrentTime = () => {
-    const [localTime, setLocalTime] = useState(time)
+    const [localTime, setLocalTime] = useState(formatTime(new Date()))
+    const intervalRef = useRef()
+
+    const getTime = () => {
+        const now = new Date()
+        return formatTime(now)
+    }
 
     useEffect(() => {
-        const interval = setInterval(() => setLocalTime(time), 1000)
-        clearInterval(interval)
-    }, [localTime])
+        intervalRef.current = setInterval(() => {
+            setLocalTime(getTime())
+        }, 1000)
+        return () => clearInterval(intervalRef.current)
+    }, [])
 
-    return <p>{localTime}</p>
+    return (
+        <>
+            <p>{localTime}</p>
+            <button onClick={() => {
+                console.log(intervalRef.current)
+                clearInterval(intervalRef.current)
+            }}>
+                Para o relógio
+            </button>
+        </>
+    )
 }
 
 export default CurrentTime
