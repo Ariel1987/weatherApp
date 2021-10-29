@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react"
-import useCurrentTemperature from "@/hooks/useCurrentTemperature"
-
+import { useForecast } from '@/context/forecast'
 const Wind = () => {
-    const [wind, setWind] = useState()
-    const currentTemperature = useCurrentTemperature()
+    const { state } = useForecast()
+    const [wind, setWind] = useState(null)
 
     useEffect(() => {
-        setWind(currentTemperature.currentWind)
-    }, [currentTemperature])
-
+        if (state.data && !state.error) {
+            setWind(state.data.wind.speed)
+        }
+    }, [state])
     return (
         <div>
             <img src="./icons/wind.png" alt="sunny-cloudy" />

@@ -1,17 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { ThemeProvider } from 'styled-components'
-import App from './App'
+import { LoadingProvider } from '@/context/loading'
+import App from '@/App'
 import GlobalStyles from './styles/GlobalStyles'
 import { theme } from './styles/Theme'
-import { LoadingProvider } from './context/context-loading'
+import { ForecastProvider } from './context/forecast'
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <LoadingProvider>
-        <GlobalStyles />
-        <App />
+        <ForecastProvider>
+          <GlobalStyles />
+          <App />
+        </ForecastProvider>
       </LoadingProvider>
     </ThemeProvider>
   </React.StrictMode>,

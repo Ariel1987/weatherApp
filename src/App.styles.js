@@ -48,8 +48,8 @@ export const Modal = styled.div`
         height: 100vh;
         width: 100%;
         background-color: rgba(125, 125, 125, .4);
-        transition: all .3s;
+        transition: all .7s cubic-bezier(0.215, 0.610, 0.355, 1);
         transform: translateY(${loading ? '-100%' : 0});
-        z-index: 999;
+        z-index: 1;
     `}
 `

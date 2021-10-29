@@ -1,22 +1,33 @@
 import { useEffect, useState } from 'react'
-import useCurrentTemperature from '../../hooks/useCurrentTemperature'
+import { useForecast } from '../../context/forecast'
+import { convertKelvinToCelcius } from '../../utils/convertKelvinToCelcius'
 import { Wrapper } from './CurrentTemperature.styles'
 
 const CurrentTemperature = () => {
-  const [temperature, setTemperature] = useState()
-  const [weather, setWeather] = useState()
-  const currentTemperature = useCurrentTemperature()
+  const { state } = useForecast()
+  const [weather, setWeather] = useState({
+    currentTemperature: null,
+    currentWeather: null,
+  })
 
   useEffect(() => {
-    setTemperature(currentTemperature.currentTemperature)
-    setWeather(currentTemperature.currentWeather)
-  }, [currentTemperature])
+    if (state.data && !state.error) {
+      setWeather({
+        currentTemperature: convertKelvinToCelcius(state.data.main.temp),
+        currentWeather: state.data.weather[0].description
+      })
+    }
+  }, [state])
 
+  const {
+    currentTemperature,
+    currentWeather
+  } = weather
   return (
     <Wrapper>
       <img src="./icons/sunny-cloudy.png" alt="sunny-cloudy" />
-      <h1>{temperature}ºC</h1>
-      <p>{weather}</p>
+      <h1>{currentTemperature}ºC</h1>
+      <p>{currentWeather}</p>
     </Wrapper>
   )
 }
