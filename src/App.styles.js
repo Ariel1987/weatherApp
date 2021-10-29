@@ -41,15 +41,15 @@ export const FooterWrapper = styled.section`
 `
 
 export const Modal = styled.div`
-        ${({ loading }) => css`
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            width: 100%;
-            background-color: rgba(125, 125, 125, .4);
-            transform: translateY(${loading ? '100%' : 0 });
-            z-index: 999;
-        `}}
-
+    ${({ loading }) => css`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+        background-color: rgba(125, 125, 125, .4);
+        transition: all .3s;
+        transform: translateY(${loading ? '-100%' : 0});
+        z-index: 999;
+    `}
 `
